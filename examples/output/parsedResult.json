@@ -4,21 +4,13 @@
     "publicKey": "7dZn2zrcPDzsTUudw9p4mpRRCmB8GBuomhfvbtoxCKuU",
     "data": {
       "marketAuthority": "Fx5mso6fV3GH1irHHncdbw6ndJqiZcrWsyrR2ZCNpkck",
-      "marketState": {
-        "privateAvailablePerpetual": {}
-      },
-      "marketTrustType": {
-        "unverified": {}
-      },
-      "pairValidationType": {
-        "classicValidation": {}
-      },
+      "marketState": "privateAvailablePerpetual",
+      "marketTrustType": "unverified",
+      "pairValidationType": "classicValidation",
       "fraktMarket": "KaRegdi8o4orkFyJau8JmAkY7doDtgAS1KU5de2sBuy",
       "minBidCap": "01",
       "minMarketFee": "0d34",
-      "whitelistType": {
-        "creator": {}
-      },
+      "whitelistType": "creator",
       "whitelistedAddress": "HYAGrAcMWFz4PR4Mm22nUvPeRhcCauT4inLfNsQyGV4o"
     }
   },
@@ -35,21 +27,13 @@
     "publicKey": "6EMaAu83tbpcKUe43jGSJkkePeVXvc6zaypL9hp3AQcw",
     "data": {
       "marketAuthority": "Fx5mso6fV3GH1irHHncdbw6ndJqiZcrWsyrR2ZCNpkck",
-      "marketState": {
-        "availablePerpetual": {}
-      },
-      "marketTrustType": {
-        "unverified": {}
-      },
-      "pairValidationType": {
-        "classicValidation": {}
-      },
+      "marketState": "availablePerpetual",
+      "marketTrustType": "unverified",
+      "pairValidationType": "classicValidation",
       "fraktMarket": "KaRegdi8o4orkFyJau8JmAkY7doDtgAS1KU5de2sBuy",
       "minBidCap": "01",
       "minMarketFee": "0d34",
-      "whitelistType": {
-        "creator": {}
-      },
+      "whitelistType": "creator",
       "whitelistedAddress": "HYAGrAcMWFz4PR4Mm22nUvPeRhcCauT4inLfNsQyGV4o"
     }
   },

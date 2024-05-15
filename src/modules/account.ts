@@ -1,7 +1,7 @@
 import { capitalizeFirstLetter } from './utils'
-import { ACCOUNT_DISCRIMINATOR_SIZE, BorshCoder, Idl, web3 } from '@project-serum/anchor'
+import { ACCOUNT_DISCRIMINATOR_SIZE, BN, BorshCoder, Idl, web3 } from '@project-serum/anchor'
 import { sha256 } from 'js-sha256'
-import { chain } from 'lodash'
+import { chain, cloneDeep, isEmpty, isNil, isObjectLike } from 'lodash'
 
 export type AccountNameAndDiscriminator = { name: string; discriminator: Buffer }
 export function createAccountDiscriminators(idl: Idl): Array<AccountNameAndDiscriminator> {
@@ -90,15 +90,55 @@ export async function getAccountsData({
 
         const accountName = getAccountName(ACCOUNTS_NAMES_AND_DISCRIMINATORS, data) ?? ''
 
-        const parsedData = decodeAccountDataSafe(coder, accountName, data)
+        const parsedData = decodeAccountDataSafe<{ [key: string]: unknown }>(
+          coder,
+          accountName,
+          data,
+        )
 
         return {
           //? Capitalization is needed because getAccountName returns name that starts from lowercase letter
           name: capitalizeFirstLetter(accountName),
           publicKey,
-          data: parsedData,
+          data: parsedData ? parseEnumsInAccount(parsedData) : null,
         }
       })
       .value()
   )
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseEnumsInAccount(rawAccount: { [key: string]: any }) {
+  const rawAccountCopy = cloneDeep(rawAccount)
+
+  for (const key in rawAccountCopy) {
+    const value = rawAccountCopy[key]
+
+    if (isNil(value)) continue
+
+    if (BN.isBN(value)) {
+      //? BN parsing here if needed
+      continue
+    }
+
+    if (value instanceof web3.PublicKey) {
+      //? Pubkey parsing here if needed
+      continue
+    }
+
+    if (!isObjectLike(value)) {
+      //? If not object --> skip
+      continue
+    }
+
+    if (Object.keys(value).length === 1 && isEmpty(Object.values(value)[0])) {
+      //? Replace empty objects with strings (enums parsing)
+      rawAccountCopy[key] = Object.keys(value)[0]
+      continue
+    }
+
+    rawAccountCopy[key] = parseEnumsInAccount(value)
+  }
+
+  return rawAccountCopy
 }
