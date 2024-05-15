@@ -41,7 +41,8 @@ export function decodeAccountDataSafe<AccountDataType>(
   data: Buffer,
 ): AccountDataType | null {
   try {
-    return coder.accounts.decode(accountName, data)
+    const decodedData = coder.accounts.decode(accountName, data)
+    return parseEnumsInAccount(decodedData)
   } catch (error) {
     console.error(error)
     return null
@@ -90,11 +91,7 @@ export async function getAccountsData({
 
         const accountName = getAccountName(ACCOUNTS_NAMES_AND_DISCRIMINATORS, data) ?? ''
 
-        const parsedData = decodeAccountDataSafe<{ [key: string]: unknown }>(
-          coder,
-          accountName,
-          data,
-        )
+        const parsedData = decodeAccountDataSafe<unknown>(coder, accountName, data)
 
         return {
           //? Capitalization is needed because getAccountName returns name that starts from lowercase letter
@@ -108,7 +105,7 @@ export async function getAccountsData({
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function parseEnumsInAccount(rawAccount: { [key: string]: any }) {
+function parseEnumsInAccount<AccountDataType>(rawAccount: any): AccountDataType {
   const rawAccountCopy = cloneDeep(rawAccount)
 
   for (const key in rawAccountCopy) {
