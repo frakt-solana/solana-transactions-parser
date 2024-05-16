@@ -49,7 +49,7 @@ export function decodeAccountDataSafe<AccountDataType>(
   }
 }
 
-type AccountData = {
+export type AccountData = {
   name: string
   publicKey: web3.PublicKey
   data: unknown
@@ -113,20 +113,14 @@ function parseEnumsInAccount<AccountDataType>(rawAccount: any): AccountDataType 
 
     if (isNil(value)) continue
 
-    if (BN.isBN(value)) {
-      //? BN parsing here if needed
-      continue
-    }
+    //? if value is BN --> skip
+    if (BN.isBN(value)) continue
 
-    if (value instanceof web3.PublicKey) {
-      //? Pubkey parsing here if needed
-      continue
-    }
+    //? If value is pubkey --> skip
+    if (value instanceof web3.PublicKey) continue
 
-    if (!isObjectLike(value)) {
-      //? If not object --> skip
-      continue
-    }
+    //? If not an object --> skip
+    if (!isObjectLike(value)) continue
 
     if (Object.keys(value).length === 1 && isEmpty(Object.values(value)[0])) {
       //? Replace empty objects with strings (enums parsing)
@@ -138,4 +132,62 @@ function parseEnumsInAccount<AccountDataType>(rawAccount: any): AccountDataType 
   }
 
   return rawAccountCopy
+}
+
+type ConvertValuesInAccountOptions = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  bnParser?: (value: BN) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  pubkeyParser?: (value: web3.PublicKey) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  stringParser?: (value: string) => any
+}
+/**
+ *
+ * @param account Object that represents an account
+ * @param options optional param with functions that parse BN, Pubkey or string
+ * @returns Parsed account
+ */
+export function convertValuesInAccount<AccountType>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  account: any,
+  options?: ConvertValuesInAccountOptions,
+): AccountType {
+  const accountCopy = cloneDeep(account)
+
+  for (const key in accountCopy) {
+    const value = accountCopy[key]
+
+    if (isNil(value)) continue
+
+    if (BN.isBN(value)) {
+      if (options?.bnParser) {
+        accountCopy[key] = options.bnParser(value)
+      }
+      continue
+    }
+
+    if (value instanceof web3.PublicKey) {
+      if (options?.pubkeyParser) {
+        accountCopy[key] = options.pubkeyParser(value)
+      }
+      continue
+    }
+
+    if (typeof value === 'string') {
+      if (options?.stringParser) {
+        accountCopy[key] = options.stringParser(value)
+      }
+      continue
+    }
+
+    if (!isObjectLike(value)) {
+      //? If smth else (not an object, BN, Pubkey, string) --> skip
+      continue
+    }
+
+    accountCopy[key] = parseEnumsInAccount(value)
+  }
+
+  return accountCopy
 }
