@@ -67,7 +67,7 @@
         "hadoMarket": "9VYeTs4iwCv7TVHxrNuUC5t6Yz1xhWeBHbFgNsx9u7rP",
         "pairState": "perpetualBondingCurveOnMarket",
         "bondingCurve": {
-          "delta": "00",
+          "delta": 0,
           "bondingType": "linearUsdc"
         },
         "baseSpotPrice": 1000000000,
@@ -82,9 +82,9 @@
         "lastTransactedAt": 1715845047,
         "assetReceiver": "6B3PLnyLeqsmpwYv8Sdh9Nnw5no9f9qDX8dnTkdLAjdy",
         "validation": {
-          "loanToValueFilter": "3b9aca00",
-          "durationFilter": "093a80",
-          "maxReturnAmountFilter": "00",
+          "loanToValueFilter": 1000000000,
+          "durationFilter": 604800,
+          "maxReturnAmountFilter": 0,
           "bondFeatures": "autoReceiveAndReceiveNft"
         }
       }

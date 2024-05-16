@@ -11,4 +11,6 @@ const examples = {
 ;(async () => {
   await examples.parsedTransactionExample()
   await examples.heliusWebhookExample()
+  //! Not finished. Doesn't work with transactions with lookupTables
+  // await examples.rawTransactionExample()
 })()
