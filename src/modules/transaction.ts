@@ -1,6 +1,7 @@
+import { HeliusEnhancedInstruction, HeliusEnhancedTransaction } from '../types'
 import { BorshCoder, Idl, web3 } from '@project-serum/anchor'
 import bs58 from 'bs58'
-import { chain } from 'lodash'
+import { chain, map } from 'lodash'
 
 export function getProgramInstructionsFromParsedTransaction(
   programId: web3.PublicKey,
@@ -115,5 +116,65 @@ function createPartiallyDecodedInstruction(
     accounts: accountKeyIndexes.map((idx) => staticAccountKeys[idx]),
     programId: staticAccountKeys[programIdIndex],
     data: bs58.encode(data),
+  }
+}
+
+//? Helius specific functions
+
+type GetProgramAccountsFromHeliusEnhancedTransaction = {
+  programId: web3.PublicKey
+  idl: Idl
+  coder: BorshCoder
+  transaction: HeliusEnhancedTransaction
+}
+export function getProgramAccountsFromHeliusEnhancedTransaction({
+  programId,
+  idl,
+  coder,
+  transaction,
+}: GetProgramAccountsFromHeliusEnhancedTransaction) {
+  //? Get instructions that relate only to provided program
+  const programInstructions = getProgramInstructionsFromHeliusEnhancedTransaction(
+    programId,
+    transaction,
+  )
+
+  return chain(programInstructions)
+    .map(getHeliusEnchancedInstructionAccountsSafe.bind(null, idl, coder))
+    .compact()
+    .flatten()
+    .uniqWith((a, b) => a.equals(b))
+    .value()
+}
+
+export function getProgramInstructionsFromHeliusEnhancedTransaction(
+  programId: web3.PublicKey,
+  transaction: HeliusEnhancedTransaction,
+): HeliusEnhancedInstruction[] {
+  return chain(transaction.instructions)
+    .filter((ixn) => new web3.PublicKey(ixn.programId).equals(programId))
+    .value()
+}
+
+export function getHeliusEnchancedInstructionAccountsSafe(
+  idl: Idl,
+  coder: BorshCoder,
+  instruction: HeliusEnhancedInstruction,
+): web3.PublicKey[] | null {
+  try {
+    const { data, accounts } = instruction
+
+    const decoded = coder.instruction.decode(data, 'base58')
+    if (!decoded) throw new Error('Failed to decode instruction data')
+
+    const { name: ixnName } = decoded
+
+    const idlIxn = idl.instructions?.find(({ name }) => name === ixnName)
+    if (!idlIxn) throw new Error("Provided IDL doesn't contain this instruction")
+
+    return map(accounts, (key) => new web3.PublicKey(key))
+  } catch (error) {
+    console.error(error)
+    return null
   }
 }
