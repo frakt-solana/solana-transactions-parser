@@ -1,48 +1,125 @@
 [
   {
-    "name": "HadoMarket",
-    "publicKey": "7dZn2zrcPDzsTUudw9p4mpRRCmB8GBuomhfvbtoxCKuU",
+    "name": "BanxStake",
+    "publicKey": "Ffopr57SUqi3DAjbjLNAyyr6TjSmudEs39w7kzNmank8",
     "data": {
-      "marketAuthority": "Fx5mso6fV3GH1irHHncdbw6ndJqiZcrWsyrR2ZCNpkck",
-      "marketState": "privateAvailablePerpetual",
-      "marketTrustType": "unverified",
-      "pairValidationType": "classicValidation",
-      "fraktMarket": "KaRegdi8o4orkFyJau8JmAkY7doDtgAS1KU5de2sBuy",
-      "minBidCap": "01",
-      "minMarketFee": "0d34",
-      "whitelistType": "creator",
-      "whitelistedAddress": "HYAGrAcMWFz4PR4Mm22nUvPeRhcCauT4inLfNsQyGV4o"
-    }
-  },
-  {
-    "name": "HadoMarketRegistry",
-    "publicKey": "FgZBkvVevV3qCS72c5nnQPGR5AMec14eqPtwMzK3JEiC",
-    "data": {
-      "hadoMarket": "7dZn2zrcPDzsTUudw9p4mpRRCmB8GBuomhfvbtoxCKuU",
-      "fraktMarket": "KaRegdi8o4orkFyJau8JmAkY7doDtgAS1KU5de2sBuy"
+      "banxStakeState": "staked",
+      "adventureSubscriptionsQuantity": 0,
+      "nftMint": "CtdgZZtSFn6dfFcUV8SYhwekX6VgsoTp85vsrwtxyGkt",
+      "collateralTokenAccount": "FAXZxTuu9hGjBChtTF3aeuP2wQeGXdeE9oAmWRiKpoPi",
+      "user": "6mUV71XNAJYvhmaZUiNjEgejBkGvvPNmGV7Rr3qPyXDo",
+      "stakedAt": 1715330339,
+      "unstakedOrLiquidatedAt": 0,
+      "isLoaned": false,
+      "bond": "11111111111111111111111111111111",
+      "playerPoints": 1,
+      "partnerPoints": 13,
+      "farmedAmount": 0,
+      "placeholderOne": "11111111111111111111111111111111"
     }
   },
   {
     "name": "HadoMarket",
-    "publicKey": "6EMaAu83tbpcKUe43jGSJkkePeVXvc6zaypL9hp3AQcw",
+    "publicKey": "FG5qySDnPjGXdvrXrvJAHbos8yDCb7YyMjKoVw52c6oh",
     "data": {
-      "marketAuthority": "Fx5mso6fV3GH1irHHncdbw6ndJqiZcrWsyrR2ZCNpkck",
+      "marketAuthority": "FTEnjqsWCCFHVLyt2Tq2cPRjxHXRjbUQoLnkKBuymNBm",
       "marketState": "availablePerpetual",
       "marketTrustType": "unverified",
       "pairValidationType": "classicValidation",
-      "fraktMarket": "KaRegdi8o4orkFyJau8JmAkY7doDtgAS1KU5de2sBuy",
-      "minBidCap": "01",
-      "minMarketFee": "0d34",
-      "whitelistType": "creator",
-      "whitelistedAddress": "HYAGrAcMWFz4PR4Mm22nUvPeRhcCauT4inLfNsQyGV4o"
+      "fraktMarket": "HrsMreAqj4ss19WDemwFCVnxnhgJ5tTNjt4k8cKzTmko",
+      "minBidCap": 1,
+      "minMarketFee": 3380,
+      "whitelistType": "collectionId",
+      "whitelistedAddress": "5tz9iHWWHr5PRQYPzLPvUMKXFCmPNPfdx5u4cha2Gj8T"
     }
   },
   {
-    "name": "HadoMarketRegistry",
-    "publicKey": "5667X8WBq6jnsWQxQ1McAp2qwmH8cXzd9QzUfdEJXKib",
+    "name": "BondOfferV2",
+    "publicKey": "CHr7C47kDVtyhoGNP5Lq3vUirPhLDmy5VWtFrKJc9SMz",
     "data": {
-      "hadoMarket": "6EMaAu83tbpcKUe43jGSJkkePeVXvc6zaypL9hp3AQcw",
-      "fraktMarket": "KaRegdi8o4orkFyJau8JmAkY7doDtgAS1KU5de2sBuy"
+      "hadoMarket": "FG5qySDnPjGXdvrXrvJAHbos8yDCb7YyMjKoVw52c6oh",
+      "pairState": "perpetualBondingCurveClosed",
+      "bondingCurve": {
+        "delta": "00",
+        "bondingType": "linear"
+      },
+      "baseSpotPrice": 0,
+      "mathCounter": -1,
+      "currentSpotPrice": 0,
+      "concentrationIndex": 0,
+      "bidCap": 100000000000000,
+      "bidSettlement": 0,
+      "edgeSettlement": 0,
+      "fundsSolOrTokenBalance": 0,
+      "buyOrdersQuantity": 0,
+      "lastTransactedAt": 1715768707,
+      "assetReceiver": "8NDescR9sjiaiy557mky66MsKcw1bMVy7giAnM58FLrd",
+      "validation": {
+        "loanToValueFilter": "00",
+        "durationFilter": "093a80",
+        "maxReturnAmountFilter": "00",
+        "bondFeatures": "autoReceiveAndReceiveNft"
+      }
+    }
+  },
+  {
+    "name": "BondTradeTransactionV3",
+    "publicKey": "9u1D3fWgPSZABT1S5rh5xvJ4AXR3ZxHCrwFd5NzWt781",
+    "data": {
+      "bondTradeTransactionState": "perpetualRefinanceRepaid",
+      "bondOffer": "CHr7C47kDVtyhoGNP5Lq3vUirPhLDmy5VWtFrKJc9SMz",
+      "user": "8NDescR9sjiaiy557mky66MsKcw1bMVy7giAnM58FLrd",
+      "amountOfBonds": 9680,
+      "solAmount": 1217700000,
+      "feeAmount": 15000000,
+      "bondTradeTransactionType": "autoReceiveAndReceiveNft",
+      "fbondTokenMint": "GqdjTZa25uKJdKtrB8PeyPzQagSip5jkfJ8RxGfy9DiY",
+      "soldAt": 1715767355,
+      "redeemedAt": 1715767528,
+      "redeemResult": "partialRepaidAndReborrowRepaid",
+      "seller": "6mUV71XNAJYvhmaZUiNjEgejBkGvvPNmGV7Rr3qPyXDo",
+      "isDirectSell": true,
+      "lendingToken": "nativeSol",
+      "currentRemainingLent": 0,
+      "interestSnapshot": 6963,
+      "partialRepaySnapshot": 267300459,
+      "terminationStartedAt": 0,
+      "lenderOriginalLent": 1500000000,
+      "lenderFullRepaidAmount": 267300459,
+      "borrowerOriginalLent": 1500000000,
+      "borrowerFullRepaidAmount": 267300459,
+      "repayDestination": "wallet",
+      "repaymentCallAmount": 0,
+      "terminationFreeze": 0,
+      "placeholder3": 0,
+      "placeholder4": 0,
+      "placeholder5": 0,
+      "placeholder6": 0,
+      "placeholder7": 0,
+      "placeholder8": "11111111111111111111111111111111"
+    }
+  },
+  {
+    "name": "FraktBond",
+    "publicKey": "GqdjTZa25uKJdKtrB8PeyPzQagSip5jkfJ8RxGfy9DiY",
+    "data": {
+      "fraktBondState": "perpetualRepaid",
+      "bondTradeTransactionsCounter": 0,
+      "borrowedAmount": 1485000000,
+      "banxStake": "Ffopr57SUqi3DAjbjLNAyyr6TjSmudEs39w7kzNmank8",
+      "fraktMarket": "HrsMreAqj4ss19WDemwFCVnxnhgJ5tTNjt4k8cKzTmko",
+      "amountToReturn": 0,
+      "actualReturnedAmount": 924548505,
+      "terminatedCounter": 0,
+      "fbondTokenMint": "CtdgZZtSFn6dfFcUV8SYhwekX6VgsoTp85vsrwtxyGkt",
+      "fbondTokenSupply": 15000000,
+      "activatedAt": 1715767355,
+      "liquidatingAt": 0,
+      "fbondIssuer": "6mUV71XNAJYvhmaZUiNjEgejBkGvvPNmGV7Rr3qPyXDo",
+      "repaidOrLiquidatedAt": 1715768659,
+      "currentPerpetualBorrowed": 924548505,
+      "lastTransactedAt": 1715768659,
+      "refinanceAuctionStartedAt": 0
     }
   }
 ]

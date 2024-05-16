@@ -3,6 +3,7 @@ import { IDL } from './idl'
 import { writeJson } from './utils'
 import { BorshCoder, web3 } from '@project-serum/anchor'
 import 'dotenv/config'
+import { map } from 'lodash'
 
 const PROGRAM_PUBKEY = new web3.PublicKey('4tdmkuY6EStxbS6Y8s5ueznL3VPMSugrvQuDeAHGZhSt')
 
@@ -11,7 +12,7 @@ const SIGNATURES = [
   '5HvaakFQnymtm3223c49nN6PMA5E87pDooFyERgEJWE8WHJrXvPLMvFisGVRer7cQff6Zw54MxvDBLcLX4ewuYB6', //? Borrow staked banx
 ]
 
-const TXN_SIGNATURE = SIGNATURES[0]
+const TXN_SIGNATURE = SIGNATURES[1]
 
 const coder = new BorshCoder(IDL)
 
@@ -55,8 +56,27 @@ export async function parsedTransactionExample() {
       programId: PROGRAM_PUBKEY,
     })
 
+    const convertedAccounts = map(data, ({ name, publicKey, data }) => {
+      const convertedData = txnParser.convertValuesInAccount(data, {
+        bnParser: (v) => {
+          try {
+            return v.toNumber()
+          } catch (err) {
+            return 0
+          }
+        },
+        pubkeyParser: (v) => v.toBase58(),
+      })
+
+      return {
+        name,
+        publicKey: publicKey.toBase58(),
+        data: convertedData,
+      }
+    })
+
     writeJson({
-      input: data,
+      input: convertedAccounts,
       fileName: 'examples/output/parsedResult.json',
     })
   } catch (error) {
