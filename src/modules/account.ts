@@ -85,6 +85,7 @@ export async function getAccountsData({
   const publicKeysAndInfo: PublicKeyAndInfo[] = accounts.map((acc, idx) => [acc, accountsInfo[idx]])
 
   //? Assume the account is deleted if it has no data
+  //? Warn that accounts may not be owned by provided program!
   const deletedAccounts = chain(publicKeysAndInfo)
     .filter(([, info]) => isNil(info))
     .map(([publicKey]) => publicKey)
