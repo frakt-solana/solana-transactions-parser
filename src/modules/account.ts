@@ -74,7 +74,7 @@ export async function getAccountsData({
   accounts,
 }: GetAccountsDataParams): Promise<{
   accountsData: AccountData[]
-  deletedAccounts: web3.PublicKey[]
+  emptyAccounts: web3.PublicKey[]
 }> {
   const ACCOUNTS_NAMES_AND_DISCRIMINATORS = createAccountDiscriminators(idl)
 
@@ -84,9 +84,9 @@ export async function getAccountsData({
 
   const publicKeysAndInfo: PublicKeyAndInfo[] = accounts.map((acc, idx) => [acc, accountsInfo[idx]])
 
-  //? Assume the account is deleted if it has no data
+  //? Assume the account is empty if it has no data
   //? Warn that accounts may not be owned by provided program!
-  const deletedAccounts = chain(publicKeysAndInfo)
+  const emptyAccounts = chain(publicKeysAndInfo)
     .filter(([, info]) => isNil(info))
     .map(([publicKey]) => publicKey)
     .value()
@@ -113,7 +113,7 @@ export async function getAccountsData({
 
   return {
     accountsData,
-    deletedAccounts,
+    emptyAccounts,
   }
 }
 
