@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from './utils'
+import { capitalizeFirstLetter } from '../utils'
 import { ACCOUNT_DISCRIMINATOR_SIZE, BN, BorshCoder, Idl, web3 } from '@project-serum/anchor'
 import { sha256 } from 'js-sha256'
 import { chain, cloneDeep, isEmpty, isNil, isObjectLike } from 'lodash'
