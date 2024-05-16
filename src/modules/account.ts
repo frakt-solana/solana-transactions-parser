@@ -72,7 +72,10 @@ export async function getAccountsData({
   coder,
   idl,
   accounts,
-}: GetAccountsDataParams): Promise<AccountData[]> {
+}: GetAccountsDataParams): Promise<{
+  accountsData: AccountData[]
+  deletedAccounts: web3.PublicKey[]
+}> {
   const ACCOUNTS_NAMES_AND_DISCRIMINATORS = createAccountDiscriminators(idl)
 
   const accountsInfo = await connection.getMultipleAccountsInfo(accounts, {
@@ -81,27 +84,36 @@ export async function getAccountsData({
 
   const publicKeysAndInfo: PublicKeyAndInfo[] = accounts.map((acc, idx) => [acc, accountsInfo[idx]])
 
-  return (
-    chain(publicKeysAndInfo)
-      //? fitler empty(deleted) accounts and accounts owned by other programs
-      .filter(([, info]) => !!info && info.owner.equals(programId))
-      .map(([publicKey, accountInfo]): AccountData => {
-        //? accountInfo always exists because null values were filtered
-        const { data } = accountInfo as web3.AccountInfo<Buffer>
+  //? Assume the account is deleted if it has no data
+  const deletedAccounts = chain(publicKeysAndInfo)
+    .filter(([, info]) => isNil(info))
+    .map(([publicKey]) => publicKey)
+    .value()
 
-        const accountName = getAccountName(ACCOUNTS_NAMES_AND_DISCRIMINATORS, data) ?? ''
+  const accountsData = chain(publicKeysAndInfo)
+    //? fitler empty(deleted) accounts and accounts owned by other programs
+    .filter(([, info]) => !!info && info.owner.equals(programId))
+    .map(([publicKey, accountInfo]): AccountData => {
+      //? accountInfo always exists because null values were filtered
+      const { data } = accountInfo as web3.AccountInfo<Buffer>
 
-        const parsedData = decodeAccountDataSafe<unknown>(coder, accountName, data)
+      const accountName = getAccountName(ACCOUNTS_NAMES_AND_DISCRIMINATORS, data) ?? ''
 
-        return {
-          //? Capitalization is needed because getAccountName returns name that starts from lowercase letter
-          name: capitalizeFirstLetter(accountName),
-          publicKey,
-          data: parsedData ? parseEnumsInAccount(parsedData) : null,
-        }
-      })
-      .value()
-  )
+      const parsedData = decodeAccountDataSafe<unknown>(coder, accountName, data)
+
+      return {
+        //? Capitalization is needed because getAccountName returns name that starts from lowercase letter
+        name: capitalizeFirstLetter(accountName),
+        publicKey,
+        data: parsedData ? parseEnumsInAccount(parsedData) : null,
+      }
+    })
+    .value()
+
+  return {
+    accountsData,
+    deletedAccounts,
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
