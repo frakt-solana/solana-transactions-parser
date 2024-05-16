@@ -199,7 +199,7 @@ export function convertValuesInAccount<AccountType>(
       continue
     }
 
-    accountCopy[key] = parseEnumsInAccount(value)
+    accountCopy[key] = convertValuesInAccount(value, options)
   }
 
   return accountCopy
