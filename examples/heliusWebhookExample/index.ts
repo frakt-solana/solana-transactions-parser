@@ -85,7 +85,7 @@ async function processTransaction(
       emptyAccounts: map(emptyAccounts, (a) => a.toBase58()),
     },
     //? You need to create logs folder yourself
-    fileName: `examples/express/logs/${Date.now()}_${heliusEnhancedTransaction.type}_${heliusEnhancedTransaction.feePayer}_${heliusEnhancedTransaction.signature}.json`,
+    fileName: `examples/heliusWebhookExample/logs/${Date.now()}_${heliusEnhancedTransaction.type}_${heliusEnhancedTransaction.feePayer}_${heliusEnhancedTransaction.signature}.json`,
   })
 
   // eslint-disable-next-line no-console
