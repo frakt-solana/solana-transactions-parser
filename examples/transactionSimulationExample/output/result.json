@@ -1,0 +1,155 @@
+{
+  "accounts": [
+    {
+      "name": "BanxStakingSettings",
+      "publicKey": "nKkuDeRMLsXS2YcEeexij76EnV3KRHu5NPqGvRi9ppP",
+      "data": {
+        "banxStakingSettingsState": "active",
+        "maxTokenStakeAmount": 15000000000,
+        "tokensPerPartnerPoints": 17756000000000,
+        "tokensStaked": 0,
+        "banxStaked": 6724,
+        "tokensPerWeek": 10529614,
+        "rewardsHarvested": 0,
+        "placeholderOne": "11111111111111111111111111111111"
+      }
+    },
+    {
+      "name": "BanxTokenStake",
+      "publicKey": "6kFNkDbQaaySf8emK51TUpQhFW36xR1YqUMhtrHuZrRv",
+      "data": {
+        "banxStakeState": "staked",
+        "user": "6mUV71XNAJYvhmaZUiNjEgejBkGvvPNmGV7Rr3qPyXDo",
+        "adventureSubscriptionsQuantity": 5,
+        "tokensStaked": 60031000000000,
+        "partnerPointsStaked": 164,
+        "playerPointsStaked": 10,
+        "banxNftsStakedQuantity": 10,
+        "stakedAt": 1715947236,
+        "unstakedAt": 0,
+        "farmedAmount": 0,
+        "nftsStakedAt": 1713878129,
+        "nftsUnstakedAt": 0,
+        "placeholderOne": "11111111111111111111111111111111"
+      }
+    },
+    {
+      "name": "BanxAdventure",
+      "publicKey": "HfJgSepJk3nR8NydVv51q8Nmz8MypHSxnfJSqZmgt33C",
+      "data": {
+        "adventureState": "active",
+        "tokensPerPoints": 17756000000000,
+        "week": 46,
+        "periodStartedAt": 1715590800,
+        "periodEndingAt": 1716195600,
+        "rewardsToBeDistributed": 23466666,
+        "totalPartnerPoints": 299032,
+        "totalPlayerPoints": 14274,
+        "totalTokensStaked": 0,
+        "totalBanxSubscribed": 4425,
+        "amountOfTokensHarvested": 0,
+        "placeholderOne": "11111111111111111111111111111111"
+      }
+    },
+    {
+      "name": "BanxAdventure",
+      "publicKey": "G6mBiF4DnGPFRkTy48oqgz1ouWGgckH41gRTdnFgF4fs",
+      "data": {
+        "adventureState": "active",
+        "tokensPerPoints": 17756000000000,
+        "week": 47,
+        "periodStartedAt": 1716195600,
+        "periodEndingAt": 1716800400,
+        "rewardsToBeDistributed": 23466666,
+        "totalPartnerPoints": 265200,
+        "totalPlayerPoints": 12572,
+        "totalTokensStaked": 0,
+        "totalBanxSubscribed": 3941,
+        "amountOfTokensHarvested": 0,
+        "placeholderOne": "11111111111111111111111111111111"
+      }
+    },
+    {
+      "name": "BanxAdventure",
+      "publicKey": "HajmTEDV9SVZ7bKbK7iE5fzLdcz9LSUC1T8ojQHdMnpk",
+      "data": {
+        "adventureState": "active",
+        "tokensPerPoints": 17756000000000,
+        "week": 48,
+        "periodStartedAt": 1716800400,
+        "periodEndingAt": 1717405200,
+        "rewardsToBeDistributed": 23466666,
+        "totalPartnerPoints": 170744,
+        "totalPlayerPoints": 7655,
+        "totalTokensStaked": 0,
+        "totalBanxSubscribed": 2586,
+        "amountOfTokensHarvested": 0,
+        "placeholderOne": "11111111111111111111111111111111"
+      }
+    },
+    {
+      "name": "BanxAdventureSubscription",
+      "publicKey": "7VLPsxKsAfHFHHJoYhVK6aKMf57MzQhBvveobV3R8eH2",
+      "data": {
+        "adventureSubscriptionState": "active",
+        "user": "6mUV71XNAJYvhmaZUiNjEgejBkGvvPNmGV7Rr3qPyXDo",
+        "adventure": "HfJgSepJk3nR8NydVv51q8Nmz8MypHSxnfJSqZmgt33C",
+        "banxTokenStake": "6kFNkDbQaaySf8emK51TUpQhFW36xR1YqUMhtrHuZrRv",
+        "stakeTokensAmount": 31000000000,
+        "stakeNftAmount": 10,
+        "stakePartnerPointsAmount": 164,
+        "stakePlayerPointsAmount": 10,
+        "subscribedAt": 1714509206,
+        "unsubscribedAt": 0,
+        "harvestedAt": 0,
+        "amountOfTokensHarvested": 0,
+        "placeholderOne": 0,
+        "placeholderTwo": 0,
+        "placeholderThree": "11111111111111111111111111111111"
+      }
+    },
+    {
+      "name": "BanxAdventureSubscription",
+      "publicKey": "5xx1b3iqeYgDpzj2hzU9GBCofz356SXMnc6hbr3CJrHw",
+      "data": {
+        "adventureSubscriptionState": "active",
+        "user": "6mUV71XNAJYvhmaZUiNjEgejBkGvvPNmGV7Rr3qPyXDo",
+        "adventure": "G6mBiF4DnGPFRkTy48oqgz1ouWGgckH41gRTdnFgF4fs",
+        "banxTokenStake": "6kFNkDbQaaySf8emK51TUpQhFW36xR1YqUMhtrHuZrRv",
+        "stakeTokensAmount": 60031000000000,
+        "stakeNftAmount": 10,
+        "stakePartnerPointsAmount": 164,
+        "stakePlayerPointsAmount": 10,
+        "subscribedAt": 1715330338,
+        "unsubscribedAt": 0,
+        "harvestedAt": 0,
+        "amountOfTokensHarvested": 0,
+        "placeholderOne": 0,
+        "placeholderTwo": 0,
+        "placeholderThree": "11111111111111111111111111111111"
+      }
+    },
+    {
+      "name": "BanxAdventureSubscription",
+      "publicKey": "95fH3kuF1ZJMDiRcGXLPsm5kyWjXKXxodpC4TZ6kgbsp",
+      "data": {
+        "adventureSubscriptionState": "active",
+        "user": "6mUV71XNAJYvhmaZUiNjEgejBkGvvPNmGV7Rr3qPyXDo",
+        "adventure": "HajmTEDV9SVZ7bKbK7iE5fzLdcz9LSUC1T8ojQHdMnpk",
+        "banxTokenStake": "6kFNkDbQaaySf8emK51TUpQhFW36xR1YqUMhtrHuZrRv",
+        "stakeTokensAmount": 60031000000000,
+        "stakeNftAmount": 10,
+        "stakePartnerPointsAmount": 164,
+        "stakePlayerPointsAmount": 10,
+        "subscribedAt": 1715947236,
+        "unsubscribedAt": 0,
+        "harvestedAt": 0,
+        "amountOfTokensHarvested": 0,
+        "placeholderOne": 0,
+        "placeholderTwo": 0,
+        "placeholderThree": "11111111111111111111111111111111"
+      }
+    }
+  ],
+  "emptyAccounts": []
+}
