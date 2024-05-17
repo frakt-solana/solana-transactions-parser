@@ -118,7 +118,7 @@ export async function getAccountsData({
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function parseEnumsInAccount<AccountDataType>(rawAccount: any): AccountDataType {
+export function parseEnumsInAccount<AccountDataType>(rawAccount: any): AccountDataType {
   const rawAccountCopy = cloneDeep(rawAccount)
 
   for (const key in rawAccountCopy) {
