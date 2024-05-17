@@ -24,11 +24,7 @@ app.post('/webhook', async (req, res) => {
 
   const payload: HeliusEnhancedTransaction[] = req.body
 
-  try {
-    await Promise.allSettled(map(payload, processTransaction))
-  } catch (error) {
-    console.error(error)
-  }
+  await Promise.allSettled(map(payload, processTransaction))
 })
 
 app.listen(port, () => {
