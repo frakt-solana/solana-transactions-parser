@@ -9,7 +9,7 @@
     "publish:minor": "yarn build && npm version minor && npm publish",
     "publish:patch": "yarn build && npm version patch && npm publish",
     "build": "yarn clear-dist && yarn build-esm && yarn build-cjs",
-    "examples": "tsx examples/index.ts",
+    "example": "tsx examples/parsedTransactionExample",
     "clear-dist": "rm -fr dist/*",
     "build-esm": "tsc -p tsconfig.json",
     "build-cjs": "tsc -p tsconfig-cjs.json",

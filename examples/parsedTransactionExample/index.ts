@@ -2,21 +2,15 @@ import {
   convertValuesInAccount,
   getAccountsData,
   getProgramAccountsFromParsedTransaction,
-} from '../src'
-import {
-  IDL,
-  PROGRAM_PUBKEY,
-  TRANSACTION_SIGNATURES_EXAMPLES,
-  coder,
-  commitment,
-  connection,
-} from './constants'
-import { writeJson } from './utils'
+} from '../../src'
+import { IDL, PROGRAM_PUBKEY, coder, commitment, connection } from '../constants'
+import { writeJson } from '../utils'
 import { map } from 'lodash'
 
-const TXN_SIGNATURE = TRANSACTION_SIGNATURES_EXAMPLES[6]
+const TXN_SIGNATURE =
+  '3ApeRKCx8p8Fffp18Uyxhqq77NKzKGpmxj19e2LpZy3kai8vb1Mc7SukGxsY2cWKwNvFaKQUkxUi4rWA4ve5ueMC'
 
-export async function parsedTransactionExample() {
+;(async () => {
   try {
     const response = await connection.getParsedTransaction(TXN_SIGNATURE, {
       commitment,
@@ -35,6 +29,8 @@ export async function parsedTransactionExample() {
       coder,
       transaction,
     })
+
+    connection.onProgramAccountChange
 
     const { accountsData, emptyAccounts } = await getAccountsData({
       accounts,
@@ -69,10 +65,10 @@ export async function parsedTransactionExample() {
         accounts: convertedAccounts,
         deletedAccounts: map(emptyAccounts, (a) => a.toBase58()),
       },
-      fileName: 'examples/output/parsedResult.json',
+      fileName: 'examples/parsedTransactionExample/output/result.json',
     })
   } catch (error) {
     // eslint-disable-next-line no-undef
     console.error(error)
   }
-}
+})()
