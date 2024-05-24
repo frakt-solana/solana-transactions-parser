@@ -180,7 +180,7 @@ export function convertValuesInAccount<AccountType>(
       continue
     }
 
-    if (value instanceof web3.PublicKey) {
+    if (isPublicKey(value)) {
       if (options?.pubkeyParser) {
         accountCopy[key] = options.pubkeyParser(value)
       }
@@ -203,4 +203,12 @@ export function convertValuesInAccount<AccountType>(
   }
 
   return accountCopy
+}
+
+//? duck typing
+export function isPublicKey(value: unknown): boolean {
+  const hasToBase58 = typeof (value as web3.PublicKey)?.toBase58 === 'function'
+  const hasToBytes = typeof (value as web3.PublicKey)?.toBytes === 'function'
+
+  return hasToBase58 && hasToBytes
 }
