@@ -87,7 +87,8 @@ export async function getAccountsData({
   //? Assume the account is empty if it has no data
   //? Warn that accounts may not be owned by provided program!
   const emptyAccounts = chain(publicKeysAndInfo)
-    .filter(([, info]) => isNil(info))
+    //? Additional check for lamports amount. If 0 -- account is empty
+    .filter(([, info]) => isNil(info) || info?.lamports === 0)
     .map(([publicKey]) => publicKey)
     .value()
 
