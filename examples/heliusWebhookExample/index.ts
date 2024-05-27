@@ -1,12 +1,11 @@
 import {
   HeliusEnhancedTransaction,
-  confirmTransactionByPollingSignatureStatus,
   convertValuesInAccount,
   getAccountsData,
   getProgramAccountsFromHeliusEnhancedTransaction,
+  waitForTransactionConfirmation,
   web3,
 } from '../../src'
-import { abortOnTimeout } from '../../src/utils'
 import { IDL, PROGRAM_PUBKEY, coder, connection } from '../constants'
 import { writeJson } from '../utils'
 import bodyParser from 'body-parser'
@@ -88,42 +87,6 @@ async function processTransaction(
 
   // eslint-disable-next-line no-console
   console.log(`Transaction ${heliusEnhancedTransaction.signature} is processed`)
-}
-
-type WaitForTransactionConfirmationParams = {
-  connection: web3.Connection
-  refetchInterval: number
-  timeout: number
-  commitment: web3.Commitment
-  signature: string
-}
-async function waitForTransactionConfirmation({
-  connection,
-  signature,
-  refetchInterval,
-  timeout,
-  commitment,
-}: WaitForTransactionConfirmationParams): Promise<void> {
-  const fetchStatusAbortController = new AbortController()
-
-  const confirmTransactionPromise = confirmTransactionByPollingSignatureStatus({
-    connection,
-    refetchInterval,
-    commitment,
-    signature,
-    abortController: fetchStatusAbortController,
-  })
-
-  try {
-    await Promise.race([
-      confirmTransactionPromise,
-      abortOnTimeout(fetchStatusAbortController, timeout),
-    ])
-  } catch (error) {
-    console.error(error)
-  } finally {
-    fetchStatusAbortController.abort()
-  }
 }
 
 function convertAccountData(data: unknown) {
