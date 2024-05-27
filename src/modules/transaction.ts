@@ -1,4 +1,5 @@
 import { HeliusEnhancedInstruction, HeliusEnhancedTransaction } from '../types'
+import { abortOnTimeout, wait } from '../utils'
 import { BorshCoder, Idl, web3 } from '@project-serum/anchor'
 import bs58 from 'bs58'
 import { chain, map } from 'lodash'
@@ -176,5 +177,81 @@ export function getHeliusEnchancedInstructionAccountsSafe(
   } catch (error) {
     console.error(error)
     return null
+  }
+}
+
+type ConfirmTransactionByPollingSignatureStatusParams = {
+  signature: string
+  connection: web3.Connection
+  commitment: web3.Commitment
+  /**
+   * Required because it is the only way to stop the loop if there were no errors
+   */
+  abortController: AbortController
+  /**
+   * Polling interval in seconds
+   */
+  refetchInterval: number
+}
+/**
+ * Can be used as fallback when websocket died (in connection.confirmTransaction) or RPC doen't support websockets at all
+ * Throws ConfirmTransactionError if something goes wrong
+ */
+export async function confirmTransactionByPollingSignatureStatus({
+  signature,
+  connection,
+  abortController,
+  commitment,
+  refetchInterval,
+}: ConfirmTransactionByPollingSignatureStatusParams): Promise<string | undefined> {
+  try {
+    while (!abortController.signal.aborted) {
+      const { value: signatureValue } = await connection.getSignatureStatus(signature, {
+        searchTransactionHistory: false,
+      })
+      if (signatureValue?.confirmationStatus === commitment) {
+        abortController.abort()
+        return signature
+      }
+      await wait(refetchInterval * 1000)
+    }
+  } catch (error) {
+    throw new Error('Error fetching transaction signature')
+  }
+}
+
+type WaitForTransactionConfirmationParams = {
+  connection: web3.Connection
+  refetchInterval: number
+  timeout: number
+  commitment: web3.Commitment
+  signature: string
+}
+export async function waitForTransactionConfirmation({
+  connection,
+  signature,
+  refetchInterval,
+  timeout,
+  commitment,
+}: WaitForTransactionConfirmationParams): Promise<void> {
+  const fetchStatusAbortController = new AbortController()
+
+  const confirmTransactionPromise = confirmTransactionByPollingSignatureStatus({
+    connection,
+    refetchInterval,
+    commitment,
+    signature,
+    abortController: fetchStatusAbortController,
+  })
+
+  try {
+    await Promise.race([
+      confirmTransactionPromise,
+      abortOnTimeout(fetchStatusAbortController, timeout),
+    ])
+  } catch (error) {
+    console.error(error)
+  } finally {
+    fetchStatusAbortController.abort()
   }
 }
