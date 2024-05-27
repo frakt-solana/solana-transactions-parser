@@ -13,7 +13,7 @@ const TXN_SIGNATURE =
 ;(async () => {
   try {
     const response = await connection.getParsedTransaction(TXN_SIGNATURE, {
-      commitment,
+      commitment: 'finalized',
       maxSupportedTransactionVersion: 2,
     })
 
