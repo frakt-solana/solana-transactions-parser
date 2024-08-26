@@ -1,5 +1,5 @@
 import { capitalizeFirstLetter } from '../utils'
-import { ACCOUNT_DISCRIMINATOR_SIZE, BN, BorshCoder, Idl, web3 } from '@project-serum/anchor'
+import { DISCRIMINATOR_SIZE, BN, BorshCoder, Idl, web3 } from '@coral-xyz/anchor'
 import { sha256 } from 'js-sha256'
 import { chain, cloneDeep, isEmpty, isNil, isObjectLike } from 'lodash'
 
@@ -11,7 +11,7 @@ export function createAccountDiscriminators(idl: Idl): Array<AccountNameAndDiscr
         //? Hashes in anchor accounts are created using names with capitalized first letter
         sha256.digest(`account:${capitalizeFirstLetter(name)}`),
         //? First 8 bytes store name hash
-      ).subarray(0, ACCOUNT_DISCRIMINATOR_SIZE)
+      ).subarray(0, DISCRIMINATOR_SIZE)
       return { name, discriminator }
     })
     .value()

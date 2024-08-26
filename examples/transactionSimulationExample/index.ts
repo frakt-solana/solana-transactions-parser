@@ -10,7 +10,7 @@ import {
 import { capitalizeFirstLetter } from '../../src/utils'
 import { IDL, PROGRAM_PUBKEY, coder, commitment, connection } from '../constants'
 import { writeJson } from '../utils'
-import { BN } from '@project-serum/anchor'
+import { BN } from '@coral-xyz/anchor'
 import { stakeBanxToken } from 'fbonds-core/lib/fbond-protocol/functions/banxStaking/banxTokenStaking'
 import { chain, isNil, map } from 'lodash'
 

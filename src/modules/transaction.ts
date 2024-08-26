@@ -1,6 +1,6 @@
 import { HeliusEnhancedInstruction, HeliusEnhancedTransaction } from '../types'
 import { abortOnTimeout, wait } from '../utils'
-import { BorshCoder, Idl, web3 } from '@project-serum/anchor'
+import { BorshCoder, Idl, web3 } from '@coral-xyz/anchor'
 import bs58 from 'bs58'
 import { chain, map } from 'lodash'
 

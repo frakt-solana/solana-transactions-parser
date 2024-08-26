@@ -4,15 +4,15 @@
       "name": "BanxStake",
       "publicKey": "Ffopr57SUqi3DAjbjLNAyyr6TjSmudEs39w7kzNmank8",
       "data": {
-        "banxStakeState": "staked",
+        "banxStakeState": "unstaked",
         "adventureSubscriptionsQuantity": 0,
         "nftMint": "CtdgZZtSFn6dfFcUV8SYhwekX6VgsoTp85vsrwtxyGkt",
         "collateralTokenAccount": "FAXZxTuu9hGjBChtTF3aeuP2wQeGXdeE9oAmWRiKpoPi",
         "user": "6mUV71XNAJYvhmaZUiNjEgejBkGvvPNmGV7Rr3qPyXDo",
         "stakedAt": 1715330339,
-        "unstakedOrLiquidatedAt": 0,
-        "isLoaned": true,
-        "bond": "8e6knQoKqaYrkv9BUKJvBCnorSR4KRGGEoLMuYTZzsDU",
+        "unstakedOrLiquidatedAt": 1716806632,
+        "isLoaned": false,
+        "bond": "11111111111111111111111111111111",
         "playerPoints": 1,
         "partnerPoints": 13,
         "farmedAmount": 0,
@@ -35,20 +35,20 @@
       }
     },
     {
-      "name": "BondOfferV2",
+      "name": "BondOfferV3",
       "publicKey": "H2q7Sw3EcdmEPwa4QNVWAYavyj6rjPaCUeuaMQ9WEFyX",
       "data": {
         "hadoMarket": "FG5qySDnPjGXdvrXrvJAHbos8yDCb7YyMjKoVw52c6oh",
         "pairState": "perpetualBondingCurveOnMarket",
         "bondingCurve": {
           "delta": 0,
-          "bondingType": "linear"
+          "bondingType": "linearBanxSol"
         },
         "baseSpotPrice": 2200000000,
         "mathCounter": -1,
         "currentSpotPrice": 2200000000,
         "concentrationIndex": 1353487,
-        "bidCap": 100000000000000,
+        "bidCap": 0,
         "bidSettlement": 136095988,
         "edgeSettlement": 0,
         "fundsSolOrTokenBalance": 0,
@@ -57,10 +57,18 @@
         "assetReceiver": "fVdNxGvxqFMbj68HD4x6mmaKBTBAvUSJ3rjzRGBNfFf",
         "validation": {
           "loanToValueFilter": 2200000000,
-          "durationFilter": 604800,
+          "collateralsPerToken": 604800,
           "maxReturnAmountFilter": 0,
           "bondFeatures": "autoReceiveAndReceiveNft"
-        }
+        },
+        "fundsInCurrentEpoch": 0,
+        "fundsInNextEpoch": 137449475,
+        "lastCalculatedSlot": 274320000,
+        "lastCalculatedTimestamp": 1719498443,
+        "rewardsToHarvest": 0,
+        "rewardsToHarvested": 0,
+        "placeholderOne": 0,
+        "placeholderTwo": "11111111111111111111111111111111"
       }
     },
     {
