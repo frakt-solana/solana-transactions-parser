@@ -1,4 +1,4 @@
 export * from './modules/account'
 export * from './modules/transaction'
 export * from './types'
-export { BorshCoder, web3 } from '@coral-xyz/anchor'
+export { BorshCoder, web3, Idl } from '@coral-xyz/anchor'

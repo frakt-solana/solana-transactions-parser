@@ -1,5 +1,5 @@
 import { capitalizeFirstLetter } from '../utils'
-import { DISCRIMINATOR_SIZE, BN, BorshCoder, Idl, web3 } from '@coral-xyz/anchor'
+import { BN, BorshCoder, DISCRIMINATOR_SIZE, Idl, web3 } from '@coral-xyz/anchor'
 import { sha256 } from 'js-sha256'
 import { chain, cloneDeep, isEmpty, isNil, isObjectLike } from 'lodash'
 
