@@ -1,2 +1,2 @@
-# Toolkit for parsing account data from a transaction
+# Toolkit for parsing account data from transaction
 > Usage examples are in the `examples` folder
