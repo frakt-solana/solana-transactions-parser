@@ -29,7 +29,8 @@ export function getAccountName(
   const targetDiscriminator = accountInfo.subarray(0, 8)
 
   const name = accountDiscriminators.find(({ discriminator }) =>
-    targetDiscriminator.equals(discriminator),
+    //? Typescript mistake
+    targetDiscriminator.compare(discriminator as unknown as Uint8Array),
   )?.name
 
   return name ?? null
@@ -131,7 +132,7 @@ export function parseEnumsInAccount<AccountDataType>(rawAccount: any): AccountDa
     if (BN.isBN(value)) continue
 
     //? If value is pubkey --> skip
-    if (value instanceof web3.PublicKey) continue
+    if (value?.toBase58) continue
 
     //? If not an object --> skip
     if (!isObjectLike(value)) continue
