@@ -30,7 +30,7 @@ export function getAccountName(
 
   const name = accountDiscriminators.find(({ discriminator }) =>
     //? Typescript mistake
-    targetDiscriminator.compare(discriminator as unknown as Uint8Array),
+    targetDiscriminator.equals(discriminator as unknown as Uint8Array),
   )?.name
 
   return name ?? null
