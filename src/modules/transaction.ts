@@ -2,14 +2,14 @@ import { HeliusEnhancedInstruction, HeliusEnhancedTransaction } from '../types'
 import { abortOnTimeout, wait } from '../utils'
 import { BorshCoder, Idl, web3 } from '@coral-xyz/anchor'
 import bs58 from 'bs58'
-import { chain, map } from 'lodash'
+import _ from 'lodash'
 
 export function getProgramInstructionsFromParsedTransaction(
   programId: web3.PublicKey,
   transaction: web3.ParsedTransaction,
 ): web3.PartiallyDecodedInstruction[] {
   return (
-    chain(transaction.message.instructions)
+    _.chain(transaction.message.instructions)
       //? Use only partiallyDecodedInstruction with a certain programId
       .filter(
         (ixn) =>
@@ -26,7 +26,7 @@ export function getProgramInstructionsFromMessage(
 ): web3.MessageCompiledInstruction[] {
   const accountKeysArray = message.staticAccountKeys
 
-  return chain(message.compiledInstructions)
+  return _.chain(message.compiledInstructions)
     .filter((ixn) => accountKeysArray[ixn.programIdIndex].equals(programId))
     .value()
 }
@@ -69,7 +69,7 @@ export function getProgramAccountsFromParsedTransaction({
   //? Get instructions that relate only to provided program
   const programInstructions = getProgramInstructionsFromParsedTransaction(programId, transaction)
 
-  return chain(programInstructions)
+  return _.chain(programInstructions)
     .map(getInstructionAccountsSafe.bind(null, idl, coder))
     .compact()
     .flatten()
@@ -95,7 +95,7 @@ export function getProgramAccountsFromMessage({
 
   const staticAccountKeys = message.staticAccountKeys
 
-  return chain(programInstructions)
+  return _.chain(programInstructions)
     .map((ixn) => {
       const decodedIxn = createPartiallyDecodedInstruction(staticAccountKeys, ixn)
       return getInstructionAccountsSafe(idl, coder, decodedIxn)
@@ -140,7 +140,7 @@ export function getProgramAccountsFromHeliusEnhancedTransaction({
     transaction,
   )
 
-  return chain(programInstructions)
+  return _.chain(programInstructions)
     .map(getHeliusEnchancedInstructionAccountsSafe.bind(null, idl, coder))
     .compact()
     .flatten()
@@ -152,7 +152,7 @@ export function getProgramInstructionsFromHeliusEnhancedTransaction(
   programId: web3.PublicKey,
   transaction: HeliusEnhancedTransaction,
 ): HeliusEnhancedInstruction[] {
-  return chain(transaction.instructions)
+  return _.chain(transaction.instructions)
     .filter((ixn) => new web3.PublicKey(ixn.programId).equals(programId))
     .value()
 }
@@ -173,7 +173,7 @@ export function getHeliusEnchancedInstructionAccountsSafe(
     const idlIxn = idl.instructions?.find(({ name }) => name === ixnName)
     if (!idlIxn) throw new Error("Provided IDL doesn't contain this instruction")
 
-    return map(accounts, (key) => new web3.PublicKey(key))
+    return _.map(accounts, (key) => new web3.PublicKey(key))
   } catch (error) {
     console.error(error)
     return null

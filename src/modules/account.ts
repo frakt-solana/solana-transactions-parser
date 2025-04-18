@@ -1,11 +1,11 @@
 import { capitalizeFirstLetter } from '../utils'
 import { BN, BorshCoder, DISCRIMINATOR_SIZE, Idl, web3 } from '@coral-xyz/anchor'
 import { sha256 } from 'js-sha256'
-import { chain, cloneDeep, isEmpty, isNil, isObjectLike } from 'lodash'
+import _ from 'lodash'
 
 export type AccountNameAndDiscriminator = { name: string; discriminator: Buffer }
 export function createAccountDiscriminators(idl: Idl): Array<AccountNameAndDiscriminator> {
-  return chain(idl.accounts)
+  return _.chain(idl.accounts)
     .map(({ name }) => {
       const discriminator = Buffer.from(
         //? Hashes in anchor accounts are created using names with capitalized first letter
@@ -87,13 +87,13 @@ export async function getAccountsData({
 
   //? Assume the account is empty if it has no data
   //? Warn that accounts may not be owned by provided program!
-  const emptyAccounts = chain(publicKeysAndInfo)
+  const emptyAccounts = _.chain(publicKeysAndInfo)
     //? Additional check for lamports amount. If 0 -- account is empty
-    .filter(([, info]) => isNil(info) || info?.lamports === 0)
+    .filter(([, info]) => _.isNil(info) || info?.lamports === 0)
     .map(([publicKey]) => publicKey)
     .value()
 
-  const accountsData = chain(publicKeysAndInfo)
+  const accountsData = _.chain(publicKeysAndInfo)
     //? fitler empty(deleted) accounts and accounts owned by other programs
     .filter(([, info]) => !!info && info.owner.equals(programId))
     .map(([publicKey, accountInfo]): AccountData => {
@@ -121,12 +121,12 @@ export async function getAccountsData({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function parseEnumsInAccount<AccountDataType>(rawAccount: any): AccountDataType {
-  const rawAccountCopy = cloneDeep(rawAccount)
+  const rawAccountCopy = _.cloneDeep(rawAccount)
 
   for (const key in rawAccountCopy) {
     const value = rawAccountCopy[key]
 
-    if (isNil(value)) continue
+    if (_.isNil(value)) continue
 
     //? if value is BN --> skip
     if (BN.isBN(value)) continue
@@ -135,9 +135,9 @@ export function parseEnumsInAccount<AccountDataType>(rawAccount: any): AccountDa
     if (value?.toBase58) continue
 
     //? If not an object --> skip
-    if (!isObjectLike(value)) continue
+    if (!_.isObjectLike(value)) continue
 
-    if (Object.keys(value).length === 1 && isEmpty(Object.values(value)[0])) {
+    if (Object.keys(value).length === 1 && _.isEmpty(Object.values(value)[0])) {
       //? Replace empty objects with strings (enums parsing)
       rawAccountCopy[key] = Object.keys(value)[0]
       continue
@@ -168,12 +168,12 @@ export function convertValuesInAccount<AccountType>(
   account: any,
   options?: ConvertValuesInAccountOptions,
 ): AccountType {
-  const accountCopy = cloneDeep(account)
+  const accountCopy = _.cloneDeep(account)
 
   for (const key in accountCopy) {
     const value = accountCopy[key]
 
-    if (isNil(value)) continue
+    if (_.isNil(value)) continue
 
     if (BN.isBN(value)) {
       if (options?.bnParser) {
@@ -196,7 +196,7 @@ export function convertValuesInAccount<AccountType>(
       continue
     }
 
-    if (!isObjectLike(value)) {
+    if (!_.isObjectLike(value)) {
       //? If smth else (not an object, BN, Pubkey, string) --> skip
       continue
     }

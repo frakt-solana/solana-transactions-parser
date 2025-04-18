@@ -12,7 +12,7 @@ import { IDL, PROGRAM_PUBKEY, coder, commitment, connection } from '../constants
 import { writeJson } from '../utils'
 import { BN } from '@coral-xyz/anchor'
 import { stakeBanxToken } from 'fbonds-core/lib/fbond-protocol/functions/banxStaking/banxTokenStaking'
-import { chain, isNil, map } from 'lodash'
+import _ from 'lodash'
 
 export async function transactionSimulationExample() {
   try {
@@ -70,7 +70,7 @@ export async function transactionSimulationExample() {
       throw new Error('Failed to fetch simulation accounts')
     }
 
-    const accountsInfo = chain(simulationValue.accounts)
+    const accountsInfo = _.chain(simulationValue.accounts)
       .compact()
       .map((account) => {
         const { data, executable, owner, lamports, rentEpoch } = account
@@ -93,12 +93,12 @@ export async function transactionSimulationExample() {
 
     //? Assume the account is empty if it has no data
     //? Warn that accounts may not be owned by provided program!
-    const emptyAccounts = chain(publicKeysAndInfo)
-      .filter(([, info]) => isNil(info))
+    const emptyAccounts = _.chain(publicKeysAndInfo)
+      .filter(([, info]) => _.isNil(info))
       .map(([publicKey]) => publicKey)
       .value()
 
-    const accountsData = chain(publicKeysAndInfo)
+    const accountsData = _.chain(publicKeysAndInfo)
       //? fitler empty(deleted) accounts and accounts owned by other programs
       .filter(([, info]) => !!info && info.owner.equals(PROGRAM_PUBKEY))
       .map(([publicKey, accountInfo]): AccountData => {
@@ -118,7 +118,7 @@ export async function transactionSimulationExample() {
       })
       .value()
 
-    const convertedAccounts = map(accountsData, ({ name, publicKey, data }) => {
+    const convertedAccounts = _.map(accountsData, ({ name, publicKey, data }) => {
       const convertedData = convertValuesInAccount(data, {
         bnParser: (v) => {
           try {
@@ -140,7 +140,7 @@ export async function transactionSimulationExample() {
     writeJson({
       input: {
         accounts: convertedAccounts,
-        emptyAccounts: map(emptyAccounts, (a) => a.toBase58()),
+        emptyAccounts: _.map(emptyAccounts, (a) => a.toBase58()),
       },
       fileName: 'examples/transactionSimulationExample/output/result.json',
     })
