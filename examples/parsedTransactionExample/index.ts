@@ -5,7 +5,7 @@ import {
 } from '../../src'
 import { IDL, PROGRAM_PUBKEY, coder, commitment, connection } from '../constants'
 import { writeJson } from '../utils'
-import { map } from 'lodash'
+import _ from 'lodash'
 
 const TXN_SIGNATURE =
   '3ApeRKCx8p8Fffp18Uyxhqq77NKzKGpmxj19e2LpZy3kai8vb1Mc7SukGxsY2cWKwNvFaKQUkxUi4rWA4ve5ueMC'
@@ -41,7 +41,7 @@ const TXN_SIGNATURE =
       programId: PROGRAM_PUBKEY,
     })
 
-    const convertedAccounts = map(accountsData, ({ name, publicKey, data }) => {
+    const convertedAccounts = _.map(accountsData, ({ name, publicKey, data }) => {
       const convertedData = convertValuesInAccount(data, {
         bnParser: (v) => {
           try {
@@ -63,7 +63,7 @@ const TXN_SIGNATURE =
     writeJson({
       input: {
         accounts: convertedAccounts,
-        deletedAccounts: map(emptyAccounts, (a) => a.toBase58()),
+        deletedAccounts: _.map(emptyAccounts, (a) => a.toBase58()),
       },
       fileName: 'examples/parsedTransactionExample/output/result.json',
     })

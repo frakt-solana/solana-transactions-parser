@@ -10,7 +10,7 @@ import { IDL, PROGRAM_PUBKEY, coder, connection } from '../constants'
 import { writeJson } from '../utils'
 import bodyParser from 'body-parser'
 import express from 'express'
-import { map } from 'lodash'
+import _ from 'lodash'
 
 const commitment: web3.Commitment = 'finalized'
 
@@ -25,7 +25,7 @@ app.post('/webhook', async (req, res) => {
 
   const payload: HeliusEnhancedTransaction[] = req.body
 
-  await Promise.allSettled(map(payload, processTransaction))
+  await Promise.allSettled(_.map(payload, processTransaction))
 })
 
 app.listen(port, () => {
@@ -63,7 +63,7 @@ async function processTransaction(
     programId: PROGRAM_PUBKEY,
   })
 
-  const convertedAccounts = map(accountsData, ({ name, publicKey, data }) => {
+  const convertedAccounts = _.map(accountsData, ({ name, publicKey, data }) => {
     const convertedData = convertAccountData(data)
 
     return {
@@ -79,7 +79,7 @@ async function processTransaction(
       wallet: heliusEnhancedTransaction.feePayer,
       signature: heliusEnhancedTransaction.signature,
       accounts: convertedAccounts,
-      emptyAccounts: map(emptyAccounts, (a) => a.toBase58()),
+      emptyAccounts: _.map(emptyAccounts, (a) => a.toBase58()),
     },
     //? You need to create logs folder yourself
     fileName: `examples/heliusWebhookExample/logs/${Date.now()}_${heliusEnhancedTransaction.type}_${heliusEnhancedTransaction.feePayer}_${heliusEnhancedTransaction.signature}.json`,
